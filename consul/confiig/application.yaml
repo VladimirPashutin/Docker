@@ -1,0 +1,29 @@
+spring:
+  codec:
+    max-in-memory-size: 67108864
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/fileStore
+  datasource:
+    url: jdbc:postgresql://srvpostgres:5432/postgres
+    username: postgres
+    password: 38rWHn4e
+  kafka:
+    bootstrap-servers: kafka:29092
+    consumer:
+      group-id: common-group
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: ru.pashutin.api
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+reportingServiceHost: reporting-service
+reportingServicePort: 8080
+ru:
+  pashutin:
+    auth:
+      accessSecret: eb778aa1c3e3bc92068fd2cce93fff792d63da325844e55d9b545526b524afc6c6ba2f1df1d0465c0cba196a1c96a3b50a2f34530b3894e9740002a033355d34
+      refreshSecret: b936cee86c9f87aa5d3c6f2e84cb5a4239a5fe50480a6ec66b70ab5b1f4ac6730c6c515421b327ec1d69402e53dfb49ad7381eb067b338fd7b0cb22247225d47

@@ -1,0 +1,6 @@
+spring:
+  flyway:
+    enabled: true
+business_ai:
+  main_python_scrypt: Services/Business/BusinessAiProcessing/businessAiProcessing.py
+  generate_publication_python_scrypt: Services/Business/BusinessAiProcessing/generatePublication.py

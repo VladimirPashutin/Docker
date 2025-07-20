@@ -1,0 +1,3 @@
+business_ai:
+  main_python_scrypt: /opt/app/businessAiProcessing.py
+  generate_publication_python_scrypt: /opt/app/generatePublication.py

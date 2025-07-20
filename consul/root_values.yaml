@@ -1,0 +1,8 @@
+business_ai.applicationName: business-ai
+business_ai.dbSchema: business_ai
+business_ai.dbUrl: postgresql://postgres:38rWHn4e@srvpostgres:5432/postgres
+business_ai.imagesUrl: http://business-ai:8080/hooded/assortment/images/
+business_ai.publicationsInterval: 345600000
+business_ai.publications_prompt_id: 8766ab9c-00e6-46d9-91c4-649bb26b1e6a
+business_ai.review_prompt_id: f9f45d83-729b-4d4d-94aa-e02be6057126
+
