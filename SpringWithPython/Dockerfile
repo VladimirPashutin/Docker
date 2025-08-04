@@ -10,8 +10,9 @@ RUN mkdir /opt/app
 WORKDIR /opt/app
 COPY ./target/lib/* ./lib/
 ENV RELEASE=${JAVA_RELEASE}
+COPY ./target/classes/*.py ./
+COPY ./target/classes/requirements.txt ./
 COPY ./target/${jarname}.jar ./application.jar
-RUN unzip ./application.jar
 RUN pip install --break-system-packages --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org --no-cache-dir -r ./requirements.txt
 
 CMD ["java", "-jar", "./application.jar"]
