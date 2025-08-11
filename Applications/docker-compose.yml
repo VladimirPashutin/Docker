@@ -1,0 +1,36 @@
+version: '3.7'
+
+networks:
+  srv_internal_network:
+    external: true
+
+services:
+  business-ai:
+    build:
+      context: ../ApplicationBuilders/SpringApplication
+      args:
+        BRANCH: trunk
+        JAVA_RELEASE: 23
+        JAR_NAME: business-ai-service-1.5.1
+        PROJECT_HOME: Services/Business/BusinessAiService
+        REPOSITORY: git@bitbucket.org:eplatform/eplatform.git
+    container_name: business-ai
+    restart: always
+    networks:
+      srv_internal_network:
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  business-ai-front:
+    build:
+      context: ../ApplicationBuilders/NodeApplication
+      args:
+        BRANCH: trunk
+        REPOSITORY: git@bitbucket.org:eplatform/businessaifrontend.git
+    container_name: business-ai-front
+    restart: always
+    networks:
+      srv_internal_network:
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro    

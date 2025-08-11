@@ -1,3 +1,8 @@
+/CommonSourceImages/SpringImage/settings.xml
+/CommonSourceImages/SpringImage/id_rsa
+/CommonSourceImages/PythonImage/id_rsa
+/CommonSourceImages/NodeImage/.npmrc
+/CommonSourceImages/NodeImage/id_rsa
 **/.fastRequest
 **/TEST*.xml
 **/.DS_Store
@@ -7,6 +12,7 @@
 **/.netlify
 **/.output
 **/target/
+/Secrets/
 */*.log*
 **/.cache
 **/.idea
