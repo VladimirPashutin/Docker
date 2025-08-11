@@ -26,6 +26,7 @@ services:
       context: ../ApplicationBuilders/PythonApplication
       args:
         BRANCH: trunk
+        SCRIPT_NAME: businessAiProcessing.py
         REPOSITORY: git@bitbucket.org:eplatform/businessaiprocessing.git
     container_name: business-ai-processor
     restart: always
