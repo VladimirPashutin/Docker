@@ -21,6 +21,19 @@ services:
     volumes:
     - /etc/timezone:/etc/timezone:ro
     - /etc/localtime:/etc/localtime:ro
+  business-ai-processor:
+    build:
+      context: ../ApplicationBuilders/PythonApplication
+      args:
+        BRANCH: trunk
+        REPOSITORY: git@bitbucket.org:eplatform/businessaiprocessing.git
+    container_name: business-ai-processor
+    restart: always
+    networks:
+      srv_internal_network:
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro    
   business-ai-front:
     build:
       context: ../ApplicationBuilders/NodeApplication
@@ -32,5 +45,5 @@ services:
     networks:
       srv_internal_network:
     volumes:
-    - /etc/timezone:/etc/timezone:ro
-    - /etc/localtime:/etc/localtime:ro    
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
