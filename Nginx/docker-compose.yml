@@ -1,0 +1,78 @@
+version: '3.7'
+
+networks:
+  srv_internal_network:
+    external: true
+  nginx_network:
+    external: true
+
+services:
+  nginx:
+    build: .
+    container_name: nginx
+    restart: always
+    networks:
+      nginx_network:
+      srv_internal_network:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+    - 8008:80
+    - 8443:443
+    volumes:
+    - type: volume
+      source: nginx-conf
+      target: /etc/nginx
+    - type: volume
+      source: nginx-cert
+      target: /etc/letsencrypt
+    - type: volume
+      source: nginx-data
+      target: /var/www
+    - type: volume
+      source: books
+      target: /var/www/books/books
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    networks:
+      nginx_network:
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+    - type: volume
+      source: nginx-cert
+      target: /etc/letsencrypt
+    - type: volume
+      source: nginx-data
+      target: /var/www
+    depends_on:
+      - nginx
+    command: renew
+volumes:
+  nginx-cert:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: /mnt/WorkData/DockerData/nginx-cert
+  nginx-conf:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: /mnt/WorkData/DockerData/nginx-conf
+  nginx-data:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: /mnt/WorkData/DockerData/nginx-data
+  books:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: /mnt/Share/Books

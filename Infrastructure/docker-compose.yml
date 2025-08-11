@@ -1,0 +1,445 @@
+version: '3.7'
+
+networks:
+  srv_internal_network:
+    external: true
+
+services:
+  consul:
+    image: consul:1.15.4
+    container_name: consul
+    restart: always
+    networks:
+      srv_internal_network:
+    ports:
+    - 18300:8300
+    - 18301:8301
+    - 18302:8302
+    - 18500:8500
+    - 18600:8600
+    volumes:
+    - type: volume
+      source: consul_config
+      target: /consul/config
+    - type: volume
+      source: consul_data
+      target: /consul/data
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+    command: "agent -server -bootstrap -ui -client 0.0.0.0"
+  srvpostgres:
+    image: postgres:14.4
+    container_name: srvpostgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 38rWHn4e
+    networks:
+      srv_internal_network:
+    volumes:
+    - type: volume
+      source: pgdata
+      target: /var/lib/postgresql/data
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+    ports:
+    - 35432:5432
+  timescale:
+    image: timescale/timescaledb-ha:pg14-latest
+    container_name: timescaledb
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 38rWHn4e
+    networks:
+      srv_internal_network:
+    ports:
+    - 65432:5432
+    volumes:
+    - type: volume
+      source: timescale_data
+      target: /home/postgres/pgdata/data
+    - type: volume
+      source: timescale_backup
+      target: /home/postgres/pgdata/backup
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.4
+    container_name: zookeeper
+    networks:
+      srv_internal_network:
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+    - 22181:2181
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  kafka:
+    image: confluentinc/cp-kafka:7.4.4
+    container_name: kafka
+    networks:
+      srv_internal_network:
+    restart: always
+    depends_on:
+    - zookeeper
+    ports:
+    - 29092:29092
+    hostname: kafka
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://:9092, EXTERNAL://:29092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://localhost:9092, EXTERNAL://192.168.0.10:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT, EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    networks:
+      srv_internal_network:
+    ports:
+      - 8998:8080
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+    links:
+      - kafka
+      - zookeeper
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+    - 27117:27017
+    networks:
+      srv_internal_network:
+    volumes:
+    - type: volume
+      source: mongoData
+      target: /data/db
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    ports:
+    - 8198:8081
+    networks:
+      srv_internal_network:
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: mongoRoot
+      ME_CONFIG_BASICAUTH_PASSWORD: 38rWHn4e!
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  mysql-db:
+    image: mysql
+    restart: always
+    container_name: mysql-db
+    networks:
+      srv_internal_network:
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_USER: mysql_user
+      MYSQL_PASSWORD: 38rWHn4e
+      MYSQL_ROOT_PASSWORD: 38rWHn4e
+    volumes:
+    - type: volume
+      source: mysql-db
+      target: /var/lib/mysql
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  wordpress:
+    image: wordpress
+    restart: always
+    container_name: wordpress
+    networks:
+      srv_internal_network:
+    ports:
+    - 8778:80
+    environment:
+      WORDPRESS_DB_HOST: mysql-db
+      WORDPRESS_DB_USER: mysql_user
+      WORDPRESS_DB_PASSWORD: 38rWHn4e
+      WORDPRESS_DB_NAME: db
+    volumes:
+    - type: volume
+      source: wordpress
+      target: /var/www/html
+    - type: volume
+      source: wordpress_apache
+      target: /etc/apache2
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  nexus:
+    image: sonatype/nexus3:3.82.0
+    container_name: nexus
+    restart: always
+    ports:
+    - 8088:8081
+    - 8123:8123
+    networks:
+      srv_internal_network:
+    volumes:
+    - type: volume
+      source: nexusdata
+      target: /nexus-data
+    - type: volume
+      source: nexusconfig
+      target: /opt/sonatype/nexus
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    environment:
+    - SONAR_JDBC_URL=jdbc:postgresql://srvpostgres/sonarqube
+    - SONAR_JDBC_USERNAME=postgres
+    - SONAR_JDBC_PASSWORD=38rWHn4e
+    restart: always
+    networks:
+      srv_internal_network:
+    ports:
+    - 9000:9000
+    volumes:
+    - type: volume
+      source: sonar-data
+      target: /opt/sonarqube/data
+    - type: volume
+      source: sonar-ext
+      target: /opt/sonarqube/extensions
+    - type: volume
+      source: sonar-logs
+      target: /opt/sonarqube/logs
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  elasticsearch:
+    image: elasticsearch:9.1.0
+    container_name: elasticsearch
+    restart: always
+    networks:
+      srv_internal_network:
+    environment:
+    - http.port=9200
+    - network.host=0.0.0.0
+    - xpack.security.enabled=false
+    - discovery.type=single-node
+    ports:
+    - 9200:9200
+    volumes:
+    - type: volume
+      source: elasticdata
+      target: /usr/share/elasticsearch/data
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  graylog:
+    image: graylog/graylog:6.1
+    container_name: graylog
+    restart: always
+    networks:
+      srv_internal_network:
+    depends_on:
+    - mongodb
+    - elasticsearch
+    ports:
+    - 1514:1514
+    - 1514:1514/udp
+    - 12201:12201
+    - 12201:12201/udp
+    environment:
+      GRAYLOG_PASSWORD_SECRET: "38rWHn4e!38rWHn4e"
+      GRAYLOG_ROOT_PASSWORD_SHA2: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
+      GRAYLOG_ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+      GRAYLOG_MONGODB_URI: "mongodb://mongodb:27017/graylog"
+    entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 -- /docker-entrypoint.sh
+    volumes:
+    - type: volume
+      source: graylogData
+      target: /usr/share/graylog/data
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  zabbix-agent:
+    image: zabbix/zabbix-agent2:alpine-6.2-latest
+    container_name: zabbix-agent
+    environment:
+      ZBX_SERVER_HOST: zabbix-server
+      ZBX_HOSTNAME: 'PVU Home server'
+    networks:
+      srv_internal_network:
+    ports:
+    - 10050:10050
+    volumes:
+    - /dev/sdc:/dev/sdc:ro
+    - /var/run:/var/run:ro
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+    - /mnt/WorkData/DockerData/zabbix/enc:/var/lib/zabbix/enc:ro
+    - /mnt/WorkData/DockerData/zabbix/agent:/etc/zabbix/zabbix_agentd.d
+    - /mnt/WorkData/DockerData/zabbix/modules:/var/lib/zabbix/modules:ro
+    - /mnt/WorkData/DockerData/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:alpine-6.2-latest
+    container_name: zabbix-server
+    environment:
+      DB_SERVER_PORT: 5432
+      DB_SERVER_HOST: srvpostgres
+      POSTGRES_PASSWORD: 38rWHn4e
+      POSTGRES_USER: zabbix
+      POSTGRES_DB: zabbix
+    restart: always
+    depends_on:
+    - srvpostgres
+    networks:
+      srv_internal_network:
+    ports:
+    - 10051:10051
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+    - /mnt/WorkData/DockerData/zabbix/enc:/var/lib/zabbix/enc:ro
+    - /mnt/WorkData/DockerData/zabbix/mibs:/var/lib/zabbix/mibs:ro
+    - /mnt/WorkData/DockerData/zabbix/export:/var/lib/zabbix/export:rw
+    - /mnt/WorkData/DockerData/zabbix/modules:/var/lib/zabbix/modules:ro
+    - /mnt/WorkData/DockerData/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
+    - /mnt/WorkData/DockerData/zabbix/snmptraps:/var/lib/zabbix/snmptraps:ro
+    - /mnt/WorkData/DockerData/zabbix/alertscripts:/usr/lib/zabbix/alertscripts:ro
+    - /mnt/WorkData/DockerData/zabbix/externalscripts:/usr/lib/zabbix/externalscripts:ro
+  zabbix-ui:
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-6.2-latest
+    container_name: zabbix-ui
+    restart: always
+    environment:
+      DB_SERVER_PORT: 5432
+      DB_SERVER_HOST: srvpostgres
+      ZBX_SERVER_HOST: zabbix-server
+      POSTGRES_PASSWORD: 38rWHn4e
+      POSTGRES_USER: zabbix
+      POSTGRES_DB: zabbix
+    depends_on:
+    - srvpostgres
+    networks:
+      srv_internal_network:
+    ports:
+    - 8380:8080
+    - 8343:8443
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+    - /mnt/WorkData/DockerData/zabbix/nginx:/etc/ssl/nginx:ro
+    - /mnt/WorkData/DockerData/zabbix/webmodules/:/usr/share/zabbix/modules/:ro
+volumes:
+  consul_config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/consul_config
+  consul_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/consul_data
+  timescale_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/timescale_db
+  timescale_backup:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/timescale_backup
+  kafka:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/kafka
+  mongoData:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/mongoData
+  elasticdata:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/elasticData
+  graylogData:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/graylogData
+  mysql-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/mysql-db
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/wordpress
+  wordpress_apache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/wordpress/apache
+  nexusconfig:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: /mnt/WorkData/DockerData/nexus-config
+  nexusdata:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: /mnt/WorkData/DockerData/nexus-data
+  sonar-data:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: /mnt/WorkData/DockerData/sonar-data
+  sonar-ext:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: /mnt/WorkData/DockerData/sonar-ext
+  sonar-logs:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: /mnt/WorkData/DockerData/sonar-logs
+  pgdata:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/srvpostgres

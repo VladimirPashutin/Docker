@@ -1,0 +1,45 @@
+version: '3.7'
+
+networks:
+  srv_internal_network:
+    external: true
+
+services:
+  auth-service:
+    image: docker.pashutin.com/auth-service:1.5.1
+    container_name: auth-service
+    restart: always
+    networks:
+      srv_internal_network:
+    depends_on:
+      - mjml-transformer
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+  mjml-transformer:
+    image: docker.pashutin.com/mjml-transformer:1.5.1
+    container_name: mjml-transformer
+    restart: always
+    networks:
+      srv_internal_network:
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  reporting-service:
+    image: docker.pashutin.com/reporting-service:1.5.1
+    container_name: reporting-service
+    restart: always
+    networks:
+      srv_internal_network:
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+  schema-provider:
+    image: docker.pashutin.com/schema-provider:1.5.1
+    container_name: schema-provider
+    restart: always
+    networks:
+      srv_internal_network:
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
