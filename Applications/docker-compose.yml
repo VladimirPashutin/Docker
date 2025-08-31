@@ -42,6 +42,11 @@ services:
         BRANCH: trunk
         REPOSITORY: git@bitbucket.org:eplatform/businessaifrontend.git
     container_name: business-ai-front
+    environment:
+      NUXT_SESSION_PASSWORD: 86dd85d2f1de41e598abe8e5e8de79ff
+      NUXT_APP_BUSINESS_HOST: https://business.t3t.online/
+      NUXT_APP_AUTH_HOST: https://business.t3t.online/
+      NUXT_AUTH_HOST: https://business.t3t.online/
     restart: always
     networks:
       srv_internal_network:
