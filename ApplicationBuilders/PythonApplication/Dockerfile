@@ -18,4 +18,4 @@ COPY --from=build_stage /build/${SCRIPT_NAME} /opt/workspace/start.py
 
 WORKDIR /opt/workspace
 
-CMD ["/usr/local/bin/python", "start.py"]
+CMD ["/usr/local/bin/python", "-u", "start.py"]

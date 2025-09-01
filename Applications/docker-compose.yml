@@ -29,6 +29,8 @@ services:
         SCRIPT_NAME: businessAiProcessing.py
         REPOSITORY: git@bitbucket.org:eplatform/businessaiprocessing.git
     container_name: business-ai-processor
+    environment:
+      PYTHONUNBUFFRED: 1
     restart: always
     networks:
       srv_internal_network:
