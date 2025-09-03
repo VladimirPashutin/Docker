@@ -1,12 +1,38 @@
-from http.server import HTTPServer, BaseHTTPRequestHandler
-from urllib.parse import urlparse
-import threading
+from __future__ import annotations
+
 import json
 import os
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
-def run_branch_update(url, body):
-    os.system('echo ' + str(url))
-    print(json.dumps(json.loads(body), indent=4))
+
+def serviceNameForRepository(repositoryName: str, branchName: str) -> str | None:
+    if "BusinessAIprocessing" == repositoryName:
+        if "main" == branchName:
+            return "business-ai-processor"
+        if "trunk" == branchName:
+            return "business-ai-processor-test"
+    if "BusinessAIfrontend" == repositoryName:
+        if "main" == branchName:
+            return "business-ai-front"
+        if "trunk" == branchName:
+            return "business-ai-front-test"
+    if "EPlatform" == repositoryName:
+        if "main" == branchName:
+            return "business-ai"
+        if "trunk" == branchName:
+            return "business-ai-test"
+    return None
+
+def run_branch_update(body):
+    params = json.loads(body)
+    if "MERGED" == params['pullrequest']['state']:
+        serviceName = serviceNameForRepository(params['repository']['name'],
+                      params['pullrequest']['destination']['branch']['name'])
+        if serviceName is not None:
+            os.system('docker-compose build --no-cache ' + serviceName)
+            os.system('docker compose up --force-recreate --build')
+            print('Перезапущен сервис ' + serviceName)
 
 class MergeAgent(BaseHTTPRequestHandler):
 
@@ -23,15 +49,9 @@ class MergeAgent(BaseHTTPRequestHandler):
     def _handle_request(self):
         if self.thread is not None:
             self.thread.join()
-        url = urlparse(self.path)
-        if url.path is None:
-            return
-        if url.path.startswith("/"):
-            url = url.path[1:]
-        else:
-            url = url.path
         content_length = int(self.headers['Content-Length'])
-        self.thread = threading.Thread(target=run_branch_update, args=(url, self.rfile.read(content_length).decode('utf-8')))
+        self.thread = threading.Thread(target=run_branch_update,
+                                       args=(self.rfile.read(content_length).decode('utf-8')))
         self.thread.daemon = True
         self.thread.start()
 
