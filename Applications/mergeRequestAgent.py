@@ -1,10 +1,12 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse
 import threading
+import json
 import os
 
-def run_branch_update(arg):
-    os.system('echo ' + str(arg))
+def run_branch_update(url, body):
+    os.system('echo ' + str(url))
+    print(json.dumps(json.loads(body), indent=4))
 
 class MergeAgent(BaseHTTPRequestHandler):
 
@@ -28,7 +30,8 @@ class MergeAgent(BaseHTTPRequestHandler):
             url = url.path[1:]
         else:
             url = url.path
-        self.thread = threading.Thread(target=run_branch_update, args=(url,))
+        content_length = int(self.headers['Content-Length'])
+        self.thread = threading.Thread(target=run_branch_update, args=(url, self.rfile.read(content_length).decode('utf-8')))
         self.thread.daemon = True
         self.thread.start()
 

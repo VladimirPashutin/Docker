@@ -1,0 +1,287 @@
+{
+    "repository": {
+        "type": "repository",
+        "full_name": "eplatform/businessaiprocessing",
+        "links": {
+            "self": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing"
+            },
+            "html": {
+                "href": "https://bitbucket.org/eplatform/businessaiprocessing"
+            },
+            "avatar": {
+                "href": "https://bytebucket.org/ravatar/%7B126c2e24-0366-4f36-81ed-7e4e8e31d43a%7D?ts=python"
+            }
+        },
+        "name": "BusinessAIprocessing",
+        "scm": "git",
+        "website": null,
+        "owner": {
+            "display_name": "EPLATFORM",
+            "links": {
+                "self": {
+                    "href": "https://api.bitbucket.org/2.0/workspaces/%7B067be8b3-c7ad-4f60-a4e1-6bb5e3f6ac52%7D"
+                },
+                "avatar": {
+                    "href": "https://bitbucket.org/account/eplatform/avatar/"
+                },
+                "html": {
+                    "href": "https://bitbucket.org/%7B067be8b3-c7ad-4f60-a4e1-6bb5e3f6ac52%7D/"
+                }
+            },
+            "type": "team",
+            "uuid": "{067be8b3-c7ad-4f60-a4e1-6bb5e3f6ac52}",
+            "username": "eplatform"
+        },
+        "workspace": {
+            "type": "workspace",
+            "uuid": "{067be8b3-c7ad-4f60-a4e1-6bb5e3f6ac52}",
+            "name": "EPLATFORM",
+            "slug": "eplatform",
+            "links": {
+                "avatar": {
+                    "href": "https://bitbucket.org/workspaces/eplatform/avatar/?ts=1754848104"
+                },
+                "html": {
+                    "href": "https://bitbucket.org/eplatform/"
+                },
+                "self": {
+                    "href": "https://api.bitbucket.org/2.0/workspaces/eplatform"
+                }
+            }
+        },
+        "is_private": true,
+        "project": {
+            "type": "project",
+            "key": "EPLATFORM",
+            "uuid": "{61e6945b-8a9e-421d-9370-dfd332fe95c1}",
+            "name": "Economics platform",
+            "links": {
+                "self": {
+                    "href": "https://api.bitbucket.org/2.0/workspaces/eplatform/projects/EPLATFORM"
+                },
+                "html": {
+                    "href": "https://bitbucket.org/eplatform/workspace/projects/EPLATFORM"
+                },
+                "avatar": {
+                    "href": "https://bitbucket.org/eplatform/workspace/projects/EPLATFORM/avatar/32?ts=1513587106"
+                }
+            }
+        },
+        "uuid": "{126c2e24-0366-4f36-81ed-7e4e8e31d43a}",
+        "parent": null
+    },
+    "actor": {
+        "display_name": "\u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440 \u041f\u0430\u0448\u0443\u0442\u0438\u043d",
+        "links": {
+            "self": {
+                "href": "https://api.bitbucket.org/2.0/users/%7B93405bcf-4422-4c98-8a59-de7c33b2e99c%7D"
+            },
+            "avatar": {
+                "href": "https://secure.gravatar.com/avatar/170767ceed132296ad5e6c9019a8a47c?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FV-0.png"
+            },
+            "html": {
+                "href": "https://bitbucket.org/%7B93405bcf-4422-4c98-8a59-de7c33b2e99c%7D/"
+            }
+        },
+        "type": "user",
+        "uuid": "{93405bcf-4422-4c98-8a59-de7c33b2e99c}",
+        "account_id": "557058:6fa767ac-d8e0-4f74-b0e7-e73de741b8a0",
+        "nickname": "VladimirPashutin"
+    },
+    "pullrequest": {
+        "comment_count": 0,
+        "task_count": 0,
+        "type": "pullrequest",
+        "id": 17,
+        "title": "Revert \"\u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430 \u0440\u0430\u0431\u043e\u0442\u044b web-\u0445\u0443\u043a\u0430 (pull request #5)\"",
+        "description": "",
+        "rendered": {
+            "title": {
+                "type": "rendered",
+                "raw": "Revert \"\u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430 \u0440\u0430\u0431\u043e\u0442\u044b web-\u0445\u0443\u043a\u0430 (pull request #5)\"",
+                "markup": "markdown",
+                "html": "<p>Revert \"\u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430 \u0440\u0430\u0431\u043e\u0442\u044b web-\u0445\u0443\u043a\u0430 (<a href=\"https://bitbucket.org/eplatform/businessaiprocessing/pull-requests/5\" rel=\"nofollow\" class=\"ap-connect-link\">pull request #5</a>)\"</p>"
+            },
+            "description": {
+                "type": "rendered",
+                "raw": "",
+                "markup": "markdown",
+                "html": ""
+            }
+        },
+        "state": "MERGED",
+        "draft": false,
+        "merge_commit": {
+            "hash": "5556081335c6",
+            "links": {
+                "self": {
+                    "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/commit/5556081335c6"
+                },
+                "html": {
+                    "href": "https://bitbucket.org/eplatform/businessaiprocessing/commits/5556081335c6"
+                }
+            },
+            "type": "commit"
+        },
+        "close_source_branch": false,
+        "closed_by": {
+            "display_name": "\u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440 \u041f\u0430\u0448\u0443\u0442\u0438\u043d",
+            "links": {
+                "self": {
+                    "href": "https://api.bitbucket.org/2.0/users/%7B93405bcf-4422-4c98-8a59-de7c33b2e99c%7D"
+                },
+                "avatar": {
+                    "href": "https://secure.gravatar.com/avatar/170767ceed132296ad5e6c9019a8a47c?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FV-0.png"
+                },
+                "html": {
+                    "href": "https://bitbucket.org/%7B93405bcf-4422-4c98-8a59-de7c33b2e99c%7D/"
+                }
+            },
+            "type": "user",
+            "uuid": "{93405bcf-4422-4c98-8a59-de7c33b2e99c}",
+            "account_id": "557058:6fa767ac-d8e0-4f74-b0e7-e73de741b8a0",
+            "nickname": "VladimirPashutin"
+        },
+        "author": {
+            "display_name": "\u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440 \u041f\u0430\u0448\u0443\u0442\u0438\u043d",
+            "links": {
+                "self": {
+                    "href": "https://api.bitbucket.org/2.0/users/%7B93405bcf-4422-4c98-8a59-de7c33b2e99c%7D"
+                },
+                "avatar": {
+                    "href": "https://secure.gravatar.com/avatar/170767ceed132296ad5e6c9019a8a47c?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FV-0.png"
+                },
+                "html": {
+                    "href": "https://bitbucket.org/%7B93405bcf-4422-4c98-8a59-de7c33b2e99c%7D/"
+                }
+            },
+            "type": "user",
+            "uuid": "{93405bcf-4422-4c98-8a59-de7c33b2e99c}",
+            "account_id": "557058:6fa767ac-d8e0-4f74-b0e7-e73de741b8a0",
+            "nickname": "VladimirPashutin"
+        },
+        "reason": "",
+        "created_on": "2025-09-03T18:12:48.855539+00:00",
+        "updated_on": "2025-09-03T18:12:56.450852+00:00",
+        "destination": {
+            "branch": {
+                "name": "test2"
+            },
+            "commit": {
+                "hash": "ce9d4d681c8e",
+                "links": {
+                    "self": {
+                        "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/commit/ce9d4d681c8e"
+                    },
+                    "html": {
+                        "href": "https://bitbucket.org/eplatform/businessaiprocessing/commits/ce9d4d681c8e"
+                    }
+                },
+                "type": "commit"
+            },
+            "repository": {
+                "type": "repository",
+                "full_name": "eplatform/businessaiprocessing",
+                "links": {
+                    "self": {
+                        "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing"
+                    },
+                    "html": {
+                        "href": "https://bitbucket.org/eplatform/businessaiprocessing"
+                    },
+                    "avatar": {
+                        "href": "https://bytebucket.org/ravatar/%7B126c2e24-0366-4f36-81ed-7e4e8e31d43a%7D?ts=python"
+                    }
+                },
+                "name": "BusinessAIprocessing",
+                "uuid": "{126c2e24-0366-4f36-81ed-7e4e8e31d43a}"
+            }
+        },
+        "source": {
+            "branch": {
+                "name": "test",
+                "links": {},
+                "sync_strategies": [
+                    "merge_commit",
+                    "rebase"
+                ]
+            },
+            "commit": {
+                "hash": "5555b30e874d",
+                "links": {
+                    "self": {
+                        "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/commit/5555b30e874d"
+                    },
+                    "html": {
+                        "href": "https://bitbucket.org/eplatform/businessaiprocessing/commits/5555b30e874d"
+                    }
+                },
+                "type": "commit"
+            },
+            "repository": {
+                "type": "repository",
+                "full_name": "eplatform/businessaiprocessing",
+                "links": {
+                    "self": {
+                        "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing"
+                    },
+                    "html": {
+                        "href": "https://bitbucket.org/eplatform/businessaiprocessing"
+                    },
+                    "avatar": {
+                        "href": "https://bytebucket.org/ravatar/%7B126c2e24-0366-4f36-81ed-7e4e8e31d43a%7D?ts=python"
+                    }
+                },
+                "name": "BusinessAIprocessing",
+                "uuid": "{126c2e24-0366-4f36-81ed-7e4e8e31d43a}"
+            }
+        },
+        "reviewers": [],
+        "participants": [],
+        "links": {
+            "self": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/pullrequests/17"
+            },
+            "html": {
+                "href": "https://bitbucket.org/eplatform/businessaiprocessing/pull-requests/17"
+            },
+            "commits": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/pullrequests/17/commits"
+            },
+            "approve": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/pullrequests/17/approve"
+            },
+            "request-changes": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/pullrequests/17/request-changes"
+            },
+            "diff": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/diff/eplatform/businessaiprocessing:5555b30e874d%0Dce9d4d681c8e?from_pullrequest_id=17&topic=true"
+            },
+            "diffstat": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/diffstat/eplatform/businessaiprocessing:5555b30e874d%0Dce9d4d681c8e?from_pullrequest_id=17&topic=true"
+            },
+            "comments": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/pullrequests/17/comments"
+            },
+            "activity": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/pullrequests/17/activity"
+            },
+            "merge": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/pullrequests/17/merge"
+            },
+            "decline": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/pullrequests/17/decline"
+            },
+            "statuses": {
+                "href": "https://api.bitbucket.org/2.0/repositories/eplatform/businessaiprocessing/pullrequests/17/statuses"
+            }
+        },
+        "summary": {
+            "type": "rendered",
+            "raw": "",
+            "markup": "markdown",
+            "html": ""
+        }
+    }
+}
