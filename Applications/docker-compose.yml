@@ -9,7 +9,7 @@ services:
     build:
       context: ../ApplicationBuilders/SpringApplication
       args:
-        BRANCH: trunk
+        BRANCH: main
         JAVA_RELEASE: 23
         JAR_NAME: business-ai-service-1.5.1
         PROJECT_HOME: Services/Business/BusinessAiService
@@ -25,7 +25,7 @@ services:
     build:
       context: ../ApplicationBuilders/PythonApplication
       args:
-        BRANCH: trunk
+        BRANCH: main
         SCRIPT_NAME: businessAiProcessing.py
         REPOSITORY: git@bitbucket.org:eplatform/businessaiprocessing.git
     container_name: business-ai-processor
@@ -41,11 +41,12 @@ services:
     build:
       context: ../ApplicationBuilders/NodeApplication
       args:
-        BRANCH: trunk
+        BRANCH: main
         REPOSITORY: git@bitbucket.org:eplatform/businessaifrontend.git
     container_name: business-ai-front
     environment:
       NUXT_SESSION_PASSWORD: 86dd85d2f1de41e598abe8e5e8de79ff
+      NUXT_APP_PUBLICATION_HOST: https://business.t3t.online/
       NUXT_APP_BUSINESS_HOST: https://business.t3t.online/
       NUXT_APP_AUTH_HOST: https://business.t3t.online/
       NUXT_AUTH_HOST: https://business.t3t.online/

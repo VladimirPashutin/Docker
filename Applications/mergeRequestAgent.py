@@ -25,14 +25,17 @@ def serviceNameForRepository(repositoryName: str, branchName: str) -> str | None
     return None
 
 def run_branch_update(body):
-    params = json.loads(body)
-    if "MERGED" == params['pullrequest']['state']:
-        serviceName = serviceNameForRepository(params['repository']['name'],
-                      params['pullrequest']['destination']['branch']['name'])
-        if serviceName is not None:
-            os.system('docker-compose build --no-cache ' + serviceName)
-            os.system('docker compose up --force-recreate --build')
-            print('Перезапущен сервис ' + serviceName)
+    try:
+        params = json.loads(body)
+        if "MERGED" == params['pullrequest']['state']:
+            serviceName = serviceNameForRepository(params['repository']['name'],
+                          params['pullrequest']['destination']['branch']['name'])
+            if serviceName is not None:
+                os.system('docker-compose build --no-cache ' + serviceName)
+                os.system('docker compose up --force-recreate --build')
+                print('Перезапущен сервис ' + serviceName)
+    except Exception as e:
+        print(f"Неверные значения для перезапуска сервиса {e}")
 
 class MergeAgent(BaseHTTPRequestHandler):
 
