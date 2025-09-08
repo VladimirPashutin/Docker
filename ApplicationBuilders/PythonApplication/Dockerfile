@@ -4,6 +4,7 @@ ARG BRANCH
 WORKDIR /build
 RUN git clone ${REPOSITORY} .
 RUN git checkout ${BRANCH}
+RUN update-ca-certificates
 RUN pip3 install -r requirements.txt
 
 FROM gcr.io/distroless/cc:latest

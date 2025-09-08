@@ -5,6 +5,7 @@ ARG REPOSITORY
 ARG JAR_NAME
 ARG BRANCH
 WORKDIR /build
+RUN update-ca-certificates
 ENV RELEASE=${JAVA_RELEASE}
 RUN git clone ${REPOSITORY} .
 RUN git checkout ${BRANCH}
