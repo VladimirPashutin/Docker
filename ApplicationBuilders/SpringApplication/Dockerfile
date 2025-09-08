@@ -5,12 +5,11 @@ ARG REPOSITORY
 ARG JAR_NAME
 ARG BRANCH
 WORKDIR /build
-RUN update-ca-certificates
 ENV RELEASE=${JAVA_RELEASE}
 RUN git clone ${REPOSITORY} .
 RUN git checkout ${BRANCH}
 WORKDIR /build/${PROJECT_HOME}
-RUN mvn install
+RUN mvn install -f /build/${PROJECT_HOME}/pom.xml
 RUN jlink --add-modules "$(jdeps --ignore-missing-deps -q -recursive --multi-release ${RELEASE} --print-module-deps --class-path='target/lib/*' target/${JAR_NAME}.jar)" --strip-debug --no-man-pages --no-header-files --compress=zip-6 --output jdk
 
 FROM gcr.io/distroless/cc:latest
