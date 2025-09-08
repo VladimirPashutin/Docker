@@ -31,7 +31,9 @@ def run_branch_update(body):
             serviceName = serviceNameForRepository(params['repository']['name'],
                           params['pullrequest']['destination']['branch']['name'])
             if serviceName is not None:
-                os.system('docker-compose up -d --build --no-cache ' + serviceName)
+                os.system('docker-compose build --no-cache ' + serviceName)
+                os.system('docker-compose down')
+                os.system('docker-compose up -d')
                 print('Перезапущен сервис ' + serviceName)
     except Exception as e:
         print(f"Неверные значения для перезапуска сервиса {e}")
