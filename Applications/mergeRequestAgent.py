@@ -54,7 +54,7 @@ class MergeAgent(BaseHTTPRequestHandler):
             self.thread.join()
         content_length = int(self.headers['Content-Length'])
         self.thread = threading.Thread(target=run_branch_update,
-                                       args=(self.rfile.read(content_length).decode('utf-8')))
+                                       args=(self.rfile.read(content_length).decode('utf-8'),))
         self.thread.daemon = True
         self.thread.start()
 
