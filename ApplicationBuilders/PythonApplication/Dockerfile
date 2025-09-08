@@ -14,6 +14,7 @@ COPY --from=build_stage /usr/bin/ /usr/bin/
 COPY --from=build_stage /usr/lib/ /usr/lib/
 COPY --from=build_stage /usr/local/ /usr/local/
 COPY --from=build_stage /build/ /opt/workspace/
+COPY --from=build_stage /lib/x86_64-linux-gnu/ /lib/x86_64-linux-gnu/
 COPY --from=build_stage /build/${SCRIPT_NAME} /opt/workspace/start.py
 
 WORKDIR /opt/workspace
