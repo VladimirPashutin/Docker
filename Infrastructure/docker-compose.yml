@@ -143,45 +143,6 @@ services:
     volumes:
     - /etc/timezone:/etc/timezone:ro
     - /etc/localtime:/etc/localtime:ro
-  mysql-db:
-    image: mysql
-    restart: always
-    container_name: mysql-db
-    networks:
-      srv_internal_network:
-    environment:
-      MYSQL_DATABASE: db
-      MYSQL_USER: mysql_user
-      MYSQL_PASSWORD: 38rWHn4e
-      MYSQL_ROOT_PASSWORD: 38rWHn4e
-    volumes:
-    - type: volume
-      source: mysql-db
-      target: /var/lib/mysql
-    - /etc/timezone:/etc/timezone:ro
-    - /etc/localtime:/etc/localtime:ro
-  wordpress:
-    image: wordpress
-    restart: always
-    container_name: wordpress
-    networks:
-      srv_internal_network:
-    ports:
-    - 8778:80
-    environment:
-      WORDPRESS_DB_HOST: mysql-db
-      WORDPRESS_DB_USER: mysql_user
-      WORDPRESS_DB_PASSWORD: 38rWHn4e
-      WORDPRESS_DB_NAME: db
-    volumes:
-    - type: volume
-      source: wordpress
-      target: /var/www/html
-    - type: volume
-      source: wordpress_apache
-      target: /etc/apache2
-    - /etc/timezone:/etc/timezone:ro
-    - /etc/localtime:/etc/localtime:ro
   nexus:
     image: sonatype/nexus3:3.82.0
     container_name: nexus
@@ -387,24 +348,6 @@ volumes:
       type: none
       o: bind
       device: /mnt/WorkData/DockerData/graylogData
-  mysql-db:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /mnt/WorkData/DockerData/mysql-db
-  wordpress:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /mnt/WorkData/DockerData/wordpress
-  wordpress_apache:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /mnt/WorkData/DockerData/wordpress/apache
   nexusconfig:
     driver: local
     driver_opts:

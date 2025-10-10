@@ -41,3 +41,122 @@ services:
     volumes:
     - /etc/timezone:/etc/timezone:ro
     - /etc/localtime:/etc/localtime:ro
+  blog-db:
+    image: mariadb:12.0.2
+    container_name: blog-db
+    restart: always
+    networks:
+      srv_internal_network:
+    environment:
+      MYSQL_DATABASE: blog
+      MYSQL_USER: blog_user
+      MYSQL_PASSWORD: 38rWHn4e
+      MYSQL_ROOT_PASSWORD: 38rWHn4e
+    volumes:
+      - type: volume
+        source: blog-db
+        target: /var/lib/mysql
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+  t3t-db:
+    image: mariadb:12.0.2
+    container_name: t3t-db
+    restart: always
+    networks:
+      srv_internal_network:
+    environment:
+      MYSQL_DATABASE: t3t
+      MYSQL_USER: t3t_user
+      MYSQL_PASSWORD: 38rWHn4e
+      MYSQL_ROOT_PASSWORD: 38rWHn4e
+    volumes:
+      - type: volume
+        source: t3t-db
+        target: /var/lib/mysql
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+  blog-service:
+    image: wordpress
+    container_name: blog-service
+    restart: always
+    depends_on:
+      - blog-db
+    networks:
+      srv_internal_network:
+    ports:
+      - 8778:80
+    environment:
+      WORDPRESS_DB_HOST: blog-db
+      WORDPRESS_DB_PASSWORD: 38rWHn4e
+      WORDPRESS_DB_USER: blog_user
+      WORDPRESS_DB_NAME: blog
+    volumes:
+      - type: volume
+        source: blog-service
+        target: /var/www/html
+      - type: volume
+        target: /etc/apache2
+        source: blog-service-apache
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+  t3t-service:
+    image: wordpress
+    container_name: t3t-service
+    restart: always
+    depends_on:
+      - t3t-db
+    networks:
+      srv_internal_network:
+    ports:
+      - 8998:80
+    environment:
+      WORDPRESS_DB_HOST: t3t-db
+      WORDPRESS_DB_PASSWORD: 38rWHn4e
+      WORDPRESS_DB_USER: t3t_user
+      WORDPRESS_DB_NAME: t3t
+    volumes:
+      - type: volume
+        source: t3t-service
+        target: /var/www/html
+      - type: volume
+        source: t3t-apache
+        target: /etc/apache2
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+volumes:
+  blog-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/blog-db
+  t3t-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/t3t-db
+  blog-service:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/blog-service
+  blog-service-apache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/blog-service/apache
+  t3t-service:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/t3t-service
+  t3t-apache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/WorkData/DockerData/t3t-service/apache
