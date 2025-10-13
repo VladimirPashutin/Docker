@@ -108,7 +108,7 @@ services:
     networks:
       srv_internal_network:
     ports:
-      - "8998:80"
+      - "8898:80"
     environment:
       WORDPRESS_DB_HOST: t3t-db
       WORDPRESS_DB_PASSWORD: 38rWHn4e
