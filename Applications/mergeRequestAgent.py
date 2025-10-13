@@ -7,6 +7,8 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 
 
 def serviceNameForRepository(repositoryName: str, branchName: str) -> str | None:
+    if "Business1cIntegrationService" == repositoryName and "main" == branchName:
+        return "business-ai-one-c"
     if "BusinessAIprocessing" == repositoryName:
         if "main" == branchName:
             return "business-ai-processor"

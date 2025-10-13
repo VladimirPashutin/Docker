@@ -5,7 +5,7 @@ networks:
 services:
   business-ai:
     build:
-      context: ../ApplicationBuilders/SpringApplication
+      context: ../ApplicationBuilders/SpringApplicationNestedHome
       args:
         BRANCH: main
         JAVA_RELEASE: 23
@@ -21,7 +21,7 @@ services:
     - /etc/localtime:/etc/localtime:ro
   business-ai-test:
     build:
-      context: ../ApplicationBuilders/SpringApplication
+      context: ../ApplicationBuilders/SpringApplicationNestedHome
       args:
         BRANCH: trunk
         JAVA_RELEASE: 23
@@ -115,7 +115,6 @@ services:
         BRANCH: main
         JAVA_RELEASE: 23
         JAR_NAME: business-1c-integration-1.5.1
-        PROJECT_HOME: Services/Business/Business1cIntegration
         REPOSITORY: git@bitbucket.org:eplatform/business1cintegrationservice.git
     container_name: business-one-c
     restart: always
