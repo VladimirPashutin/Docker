@@ -83,8 +83,6 @@ services:
       - blog-db
     networks:
       srv_internal_network:
-    ports:
-      - "8228:80"
     environment:
       WORDPRESS_DB_HOST: blog-db
       WORDPRESS_DB_PASSWORD: 38rWHn4e
@@ -107,8 +105,6 @@ services:
       - t3t-db
     networks:
       srv_internal_network:
-    ports:
-      - "8898:80"
     environment:
       WORDPRESS_DB_HOST: t3t-db
       WORDPRESS_DB_PASSWORD: 38rWHn4e

@@ -56,8 +56,9 @@ class MergeAgent(BaseHTTPRequestHandler):
         if self.thread is not None:
             self.thread.join()
         content_length = int(self.headers['Content-Length'])
-        self.thread = threading.Thread(target=run_branch_update,
-                                       args=(self.rfile.read(content_length).decode('utf-8'),))
+        processing_data = self.rfile.read(content_length).decode('utf-8')
+        self.thread = threading.Thread(target=run_branch_update, args=(processing_data,))
+        print(f"Обрабатываются данные {processing_data}")
         self.thread.daemon = True
         self.thread.start()
 
