@@ -58,7 +58,8 @@ class MergeAgent(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         processing_data = self.rfile.read(content_length).decode('utf-8')
         self.thread = threading.Thread(target=run_branch_update, args=(processing_data,))
-        print(f"Обрабатываются данные {processing_data}")
+        with open("~/mergeData.json", "w") as file:
+            file.write(processing_data)
         self.thread.daemon = True
         self.thread.start()
 
