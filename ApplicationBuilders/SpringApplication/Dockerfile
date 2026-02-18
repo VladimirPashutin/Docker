@@ -1,14 +1,12 @@
 FROM docker.pashutin.com/spring-image:latest AS build_stage
-ARG JAVA_RELEASE
 ARG REPOSITORY
 ARG JAR_NAME
 ARG BRANCH
 WORKDIR /build
-ENV RELEASE=${JAVA_RELEASE}
 RUN git clone ${REPOSITORY} .
 RUN git checkout ${BRANCH}
 RUN mvn install -f /build/pom.xml
-RUN jlink --add-modules "$(jdeps --ignore-missing-deps -q -recursive --multi-release ${RELEASE} --print-module-deps --class-path='target/lib/*' target/${JAR_NAME}.jar)" --strip-debug --no-man-pages --no-header-files --compress=zip-6 --output jdk
+RUN jlink --add-modules "$(jdeps --ignore-missing-deps -q -recursive --multi-release 23 --print-module-deps --class-path='target/lib/*' target/${JAR_NAME}.jar)" --strip-debug --no-man-pages --no-header-files --compress=zip-6 --output jdk
 
 FROM gcr.io/distroless/cc:latest
 LABEL authors="Vladimir Pashutin"

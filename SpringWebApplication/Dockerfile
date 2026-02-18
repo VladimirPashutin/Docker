@@ -1,11 +1,9 @@
 FROM docker.pashutin.com/spring-image:latest AS build_stage
-ARG JAVA_RELEASE
 ARG JAR_NAME
 WORKDIR /build
 COPY ./target/lib/* ./lib/
-ENV RELEASE=${JAVA_RELEASE}
 COPY ./target/${JAR_NAME}.jar ./application.jar
-RUN jlink --add-modules "$(jdeps --ignore-missing-deps -q -recursive --multi-release ${RELEASE} --print-module-deps --class-path='lib/*' application.jar)" --strip-debug --no-man-pages --no-header-files --compress=zip-6 --output jdk
+RUN jlink --add-modules "$(jdeps --ignore-missing-deps -q -recursive --multi-release 23 --print-module-deps --class-path='lib/*' application.jar)" --strip-debug --no-man-pages --no-header-files --compress=zip-6 --output jdk
 
 FROM gcr.io/distroless/cc:latest
 LABEL authors="Vladimir Pashutin"
