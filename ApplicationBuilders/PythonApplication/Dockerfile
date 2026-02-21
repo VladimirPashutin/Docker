@@ -4,7 +4,8 @@ ARG BRANCH
 WORKDIR /build
 RUN git clone ${REPOSITORY} .
 RUN git checkout ${BRANCH}
-RUN pip3 install -r requirements.txt
+RUN pip3 install pipenv
+RUN pipenv install
 
 FROM gcr.io/distroless/cc:latest
 LABEL authors="Vladimir Pashutin"
