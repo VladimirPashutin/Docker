@@ -1,0 +1,2 @@
+datasource:
+  url: postgresql://postgres:postgres@localhost:65432/postgres

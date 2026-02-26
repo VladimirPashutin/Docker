@@ -1,12 +1,12 @@
 spring:
   flyway:
-    enabled: true
+    enabled: false
 python:
   application:
     name: business-ai
   businessAiSchema: business_ai
   datasource:
-    url: postgresql://postgres:postgres@localhost:5432/postgres
+    url: postgresql://postgres:38rWHn4e@192.168.0.10:35432/postgres
   max_chars_for_publication: 2500
   max_tokens_for_describe_image: 500
   imagesUrl: https://business.t3t.online/common/images/

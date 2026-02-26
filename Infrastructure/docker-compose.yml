@@ -4,7 +4,7 @@ networks:
 
 services:
   consul:
-    image: consul:1.15.4
+    image: hashicorp/consul:1.22.3
     container_name: consul
     restart: always
     networks:
@@ -186,7 +186,7 @@ services:
     - /etc/timezone:/etc/timezone:ro
     - /etc/localtime:/etc/localtime:ro
   elasticsearch:
-    image: elasticsearch:9.1.0
+    image: elasticsearch:9.3.0
     container_name: elasticsearch
     restart: always
     networks:
@@ -205,7 +205,7 @@ services:
     - /etc/timezone:/etc/timezone:ro
     - /etc/localtime:/etc/localtime:ro
   graylog:
-    image: graylog/graylog:6.1
+    image: graylog/graylog:6.2.12-1
     container_name: graylog
     restart: always
     networks:
