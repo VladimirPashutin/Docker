@@ -79,10 +79,10 @@ services:
     container_name: business-ai-front
     environment:
       NUXT_SESSION_PASSWORD: 86dd85d2f1de41e598abe8e5e8de79ff
-      PUBLICATION_HOST: https://business-test.t3t.online/
-      BUSINESS_HOST: https://business-test.t3t.online/
-      AUTH_HOST: https://business-test.t3t.online/
-      AI_HOST: https://business-test.t3t.online/
+      PUBLICATION_HOST: https://business.t3t.online/
+      BUSINESS_HOST: https://business.t3t.online/
+      AUTH_HOST: https://business.t3t.online/
+      AI_HOST: https://business.t3t.online/
       INNER_AUTH_HOST: http://auth-service:8080/
     restart: always
     networks:
