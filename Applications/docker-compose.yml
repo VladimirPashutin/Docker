@@ -108,18 +108,3 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-  business-ai-one-c:
-    build:
-      context: ../ApplicationBuilders/SpringApplication
-      args:
-        BRANCH: main
-        JAVA_RELEASE: 23
-        JAR_NAME: business-1c-integration-1.5.1
-        REPOSITORY: git@bitbucket.org:eplatform/business1cintegrationservice.git
-    container_name: business-one-c
-    restart: always
-    networks:
-      srv_internal_network:
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
