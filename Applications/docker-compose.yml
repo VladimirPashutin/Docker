@@ -83,7 +83,7 @@ services:
       BUSINESS_HOST: https://business.t3t.online/
       AUTH_HOST: https://business.t3t.online/
       AI_HOST: https://business.t3t.online/
-      INNER_AUTH_HOST: http://auth-service:8080/
+      INNER_AUTH_HOST: https://business.t3t.online/
     restart: always
     networks:
       srv_internal_network:
@@ -103,7 +103,7 @@ services:
       BUSINESS_HOST: https://business-test.t3t.online/
       AUTH_HOST: https://business-test.t3t.online/
       AI_HOST: https://business-test.t3t.online/
-      INNER_AUTH_HOST: http://auth-service:8080/
+      INNER_AUTH_HOST: https://business-test.t3t.online/
     restart: always
     networks:
       srv_internal_network:
