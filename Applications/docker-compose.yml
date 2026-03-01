@@ -83,7 +83,7 @@ services:
       NUXT_PUBLIC_BUSINESS_HOST: https://business.t3t.online/
       NUXT_PUBLIC_AUTH_HOST: https://business.t3t.online/
       NUXT_PUBLIC_AI_HOST: https://business.t3t.online/
-      NUXT_INNER_AUTH_HOST: http://auth-service:8080/
+      NUXT_PUBLIC_INNER_AUTH_HOST: http://auth-service:8080/
     restart: always
     networks:
       srv_internal_network:
@@ -103,7 +103,7 @@ services:
       NUXT_PUBLIC_BUSINESS_HOST: https://business-test.t3t.online/
       NUXT_PUBLIC_AUTH_HOST: https://business-test.t3t.online/
       NUXT_PUBLIC_AI_HOST: https://business-test.t3t.online/
-      NUXT_INNER_AUTH_HOST: http://auth-service:8080/
+      NUXT_PUBLIC_INNER_AUTH_HOST: http://auth-service:8080/
     restart: always
     networks:
       srv_internal_network:
